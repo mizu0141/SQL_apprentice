@@ -9,7 +9,7 @@ ORDER BY views_count DESC LIMIT 3;
 
 ### 2.よく見られているエピソードの番組情報やシーズン情報
 ```sql
-SELECT e.episode_name, ce.views_count, p.program_name, s.season_number
+SELECT start_time, end_time, p.program_name, s.season_number
 FROM episodes AS e
 JOIN seasons AS s
 ON e.season_id = s.season_id
