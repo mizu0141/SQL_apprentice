@@ -45,7 +45,7 @@ ON ce.episode_id = e.episode_id
 JOIN seasons AS s
 ON e.season_id = s.season_id
 WHERE DATE(broadcast_time) BETWEEN DATE(NOW()) AND DATE_ADD(DATE(NOW()), INTERVAL 7 DAY)
-AND c.channel_name = 'food';
+AND c.channel_name = 'ドラマ';
 ```
 
 ### 5.直近一週間で最も観られた番組
