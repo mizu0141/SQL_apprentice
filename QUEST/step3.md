@@ -1,6 +1,6 @@
 ### 1.よく見られているエピソード
 ```sql
-SELECT  e.episode_name, ce.views_count
+SELECT e.episode_name, SUM(ce.views_count) as total_views
 FROM episodes AS e
 JOIN channel_episodes AS ce
 ON e.episode_id = ce.episode_id
@@ -9,7 +9,7 @@ ORDER BY views_count DESC LIMIT 3;
 
 ### 2.よく見られているエピソードの番組情報やシーズン情報
 ```sql
-SELECT start_time, end_time, p.program_name, s.season_number
+SELECT p.program_name, s.season_number, e.episode_number, e.episode_name, SUM(ce.views_count) AS total_views
 FROM episodes AS e
 JOIN seasons AS s
 ON e.season_id = s.season_id
@@ -22,7 +22,9 @@ ORDER BY views_count DESC LIMIT 3;
 
 ### 3.本日放送される全ての番組に対して、チャンネル名、放送開始時刻、放送終了時刻、シーズン数、エピソード数、エピソードタイトル、エピソード詳細を表示する
 ```sql
-SELECT  c.channel_name, start_time,  end_time, season_number, episode_number, episode_name, episode_detail
+SELECT  c.channel_name, CONTACT(ce.broadcast_date, ' ', ce.start_time) AS start_time,  
+        CONTACT ce.broadcast_date, ' ', ce.end_time) AS end_time, season_number, episode_number, episode_name,            
+        episode_detail
 FROM channels AS c
 JOIN channel_episodes AS ce
 ON c.channel_id = ce.channel_id
@@ -36,7 +38,8 @@ ORDER BY channel_name;
 - ORDER BY で、SELECT で指定した項目の中から並び替えたい項目を指定する
 ### 4.ドラマのチャンネルに対して、放送開始時刻、放送終了時刻、シーズン数、エピソード数、エピソードタイトル、エピソード詳細を本日から一週間分表示する
 ```sql
-SELECT  ce.broadcast_time, ADDTIME(ce.broadcast_time, e.duration) AS end_time, s.season_number, e.episode_number, e.episode_name, e.episode_detail
+SELECT CONTACT(ce.broadcast_date, ' ', ce.start_time) AS start_time, CONTACT ce.broadcast_date, ' ', ce.end_time) AS 
+       end_time, s.season_number, e.episode_number, e.episode_name, e.episode_detail
 FROM channels AS c
 JOIN channel_episodes AS ce
 ON c.channel_id = ce.channel_id
