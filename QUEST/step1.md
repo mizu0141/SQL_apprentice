@@ -49,8 +49,8 @@
 | episode_number  | INT     | NOT NULL                       |
 | episode_name    | VARCHAR(255) | NOT NULL                    |
 | episode_detail  | TEXT    |                               |
-| start_time      | TIME    |                               |
-| end_time        | TIME    |                               |
+| duration        | TIME    |                               |
+
 
 #### テーブル: channel_episodes
 | 列名             | データ型 | 制約                              |
