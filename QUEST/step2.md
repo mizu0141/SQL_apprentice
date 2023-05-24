@@ -12,23 +12,28 @@
 
 ## - チャンネルテーブルの作成
 - チャンネルテーブルを以下のコマンドを実行して、作成してください。
-    ```sql
+    
+   ```sql
     CREATE TABLE channels (
        channel_id INT PRIMARY KEY AUTO_INCREMENT,
        channel_name VARCHAR(255) NOT NULL
 );
     ```
+
 ## - 番組テーブルの作成
 - 番組テーブルを以下のコマンドを実行して、作成してください。
-    ```sql
+    
+```sql
     CREATE TABLE programs (
        program_id INT PRIMARY KEY AUTO_INCREMENT,
        program_name VARCHAR(255) NOT NULL,
        program_detail TEXT
 );
     ```
+
 ## - シーズンテーブルの作成
 - シーズンテーブルを以下のコマンドを実行して、作成してください。
+
     ```sql
     CREATE TABLE seasons (
        season_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -37,9 +42,11 @@
     FOREIGN KEY (program_id) REFERENCES programs(program_id)
 );
     ```
+
 ## ジャンルテーブルの作成
 - ジャンルテーブルを以下のコマンドを実行して、作成してください。
-    ```sql
+   
+ ```sql
     CREATE TABLE genres (
        genre_id INT PRIMARY KEY AUTO_INCREMENT,
        genre_name VARCHAR(255) NOT NULL
@@ -58,9 +65,11 @@
     FOREIGN KEY (genre_id) REFERENCES genres(genre_id)
 );
     ```
+
 ## - 時間帯テーブルの作成
 - 時間帯テーブルを以下のコマンドを実行して、作成してください。
-    ```sql
+    
+```sql
     CREATE TABLE time_slots (
        time_slot_id INT PRIMARY KEY AUTO_INCREMENT,
        time_slot_name VARCHAR(255) NOT NULL,
@@ -70,7 +79,8 @@
     ```
 ## - エピソードテーブルの作成
 - エピソードテーブルを以下のコマンドを実行して、作成してください。
-    ```sql
+    
+```sql
     CREATE TABLE episodes (
        episode_id INT PRIMARY KEY AUTO_INCREMENT,
        season_id INT NOT NULL,
@@ -82,9 +92,10 @@
     FOREIGN KEY (season_id) REFERENCES seasons(season_id)
 );
     ```
-## - チャンネルと時間帯の関連テーブルの作成
+## - チャンネルとエピソードの関連テーブルの作成
 - チャンネルと時間帯の関連テーブルを以下のコマンドを実行して、作成してください。
-    ```sql
+    
+```sql
     CREATE TABLE channel_episodes (
        channel_id INT NOT NULL,
        episode_id INT NOT NULL,
