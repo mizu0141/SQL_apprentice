@@ -23,12 +23,12 @@
 ## - 番組テーブルの作成
 - 番組テーブルを以下のコマンドを実行して、作成してください。
     
-```sql
+　　　```sql
     CREATE TABLE programs (
        program_id INT PRIMARY KEY AUTO_INCREMENT,
        program_name VARCHAR(255) NOT NULL,
        program_detail TEXT
-);
+　　　);
     ```
 
 ## - シーズンテーブルの作成
