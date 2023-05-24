@@ -1,26 +1,30 @@
 ## STEP1
 
-### 1.データベースの構築
+### 1.データベースの作成・選択
 
 - MySQLを起動して、ログインし、以下のコマンドを実行してデータベースを作成してください。
 
-    ```sql
+  ```sql
     CREATE DATABASE internet_tv;
-    ```
+  ```
+- 作成したデータベースを選択して下さい。
+  ```sql
+    USE internet_tv;
+  ```
 
 ### 2.テーブルの作成
 
-## - チャンネルテーブルの作成
+## チャンネルテーブルの作成
 - チャンネルテーブルを以下のコマンドを実行して、作成してください。
     
-   ```sql
+  ```sql
     CREATE TABLE channels (
        channel_id INT PRIMARY KEY AUTO_INCREMENT,
        channel_name VARCHAR(255) NOT NULL
-);
-    
+     );
+  ``` 
 
-## - 番組テーブルの作成
+## 番組テーブルの作成
 - 番組テーブルを以下のコマンドを実行して、作成してください。
     
 　　　```sql
@@ -29,19 +33,19 @@
        program_name VARCHAR(255) NOT NULL,
        program_detail TEXT
 　　　);
-    ```
+  ```
 
-## - シーズンテーブルの作成
+## シーズンテーブルの作成
 - シーズンテーブルを以下のコマンドを実行して、作成してください。
 
-    ```sql
+ ```sql
     CREATE TABLE seasons (
        season_id INT PRIMARY KEY AUTO_INCREMENT,
        program_id INT NOT NULL,
        season_number INT NOT NULL,
     FOREIGN KEY (program_id) REFERENCES programs(program_id)
-);
-    ```
+    );
+  ```
 
 ## ジャンルテーブルの作成
 - ジャンルテーブルを以下のコマンドを実行して、作成してください。
@@ -50,23 +54,23 @@
     CREATE TABLE genres (
        genre_id INT PRIMARY KEY AUTO_INCREMENT,
        genre_name VARCHAR(255) NOT NULL
-);
-    ```
-
+       );
+  ```
+ 
 ## 番組とジャンルの関連テーブルの作成
 - 番組とジャンルの関連テーブルを以下のコマンドを実行して、作成してください。
 
-    ```sql
+  ```sql
     CREATE TABLE program_genres (
        program_id INT NOT NULL,
        genre_id INT NOT NULL,
     PRIMARY KEY (program_id, genre_id),
     FOREIGN KEY (program_id) REFERENCES programs(program_id),
     FOREIGN KEY (genre_id) REFERENCES genres(genre_id)
-);
-    ```
-
-## - 時間帯テーブルの作成
+    );
+  ```
+    
+## 時間帯テーブルの作成
 - 時間帯テーブルを以下のコマンドを実行して、作成してください。
     
 ```sql
@@ -75,9 +79,10 @@
        time_slot_name VARCHAR(255) NOT NULL,
        start_time TIME NOT NULL,
        end_time TIME NOT NULL
-);
-    ```
-## - エピソードテーブルの作成
+       );
+  ```
+    
+## エピソードテーブルの作成
 - エピソードテーブルを以下のコマンドを実行して、作成してください。
     
 ```sql
@@ -87,12 +92,12 @@
        episode_number INT NOT NULL,
        episode_name VARCHAR(255) NOT NULL,
        episode_detail TEXT,
-       start_time TIME,
-       end_time TIME,
+       duration TIME
     FOREIGN KEY (season_id) REFERENCES seasons(season_id)
-);
-    ```
-## - チャンネルとエピソードの関連テーブルの作成
+    );
+```
+    
+## チャンネルとエピソードの関連テーブルの作成
 - チャンネルと時間帯の関連テーブルを以下のコマンドを実行して、作成してください。
     
 ```sql
@@ -109,8 +114,8 @@
     FOREIGN KEY (episode_id) REFERENCES episodes(episode_id),
     FOREIGN KEY (time_slot_id) REFERENCES time_slots(time_slot_id),
     UNIQUE (channel_id, broadcast_date, time_slot_id)
-);
-    ```
+    );
+ ```
 
 ### 3.サンプルデータの挿入
 - INSERT文を実行して、チャンネルテーブルに以下のデータを入力してください。
@@ -126,7 +131,7 @@
 
        INSERT INTO program_genres  (program_id, genre_id) VALUES (1, 1),(1, 2), (2, 3), (2, 4), (3, 1), (3, 5), (4, 6), (4, 7), (5, 8), (5, 9), (6, 10);;
 
-       INSERT INTO episodes (season_id, episode_number, episode_name, episode_detail, start_time, end_time) VALUES (1, 1, 'エピソード1', 'エピソード1の詳細', '00:00:00', '00:30:00'), (1, 2, 'エピソード2', 'エピソード2の詳細', '00:00:00', '00:30:00'), (1, 3, 'エピソード3', 'エピソード3の詳細', '00:00:00', '00:30:00'), (1, 4, 'エピソード4', 'エピソード4の詳細', '00:00:00', '00:30:00'), (1, 5, 'エピソード5', 'エピソード5の詳細', '00:00:00', '00:30:00'), (1, 6, 'エピソード6', 'エピソード6の詳細', '00:00:00', '00:30:00'), (1, 7, 'エピソード7', 'エピソード7の詳細', '00:00:00', '00:30:00'), (1, 8, 'エピソード8', 'エピソード8の詳細', '00:00:00', '00:30:00'), (1, 9, 'エピソード9', 'エピソード9の詳細', '00:00:00', '00:30:00'), (2, 1, 'エピソード1', 'エピソード1の詳細', '00:00:00', '00:30:00'), (2, 2, 'エピソード2', 'エピソード2の詳細', '00:00:00', '00:30:00'), (2, 3, 'エピソード3', 'エピソード3の詳細', '00:00:00', '00:30:00');
+       INSERT INTO episodes (season_id, episode_number, episode_name, episode_detail, duration) VALUES (1, 1, 'エピソード1', 'エピソード1の詳細', '00:30:00'), (1, 2, 'エピソード2', 'エピソード2の詳細', '00:30:00'), (1, 3, 'エピソード3', 'エピソード3の詳細', '00:30:00'), (1, 4, 'エピソード4', 'エピソード4の詳細', '00:30:00'), (1, 5, 'エピソード5', 'エピソード5の詳細', '00:30:00'), (1, 6, 'エピソード6', 'エピソード6の詳細', '00:30:00'), (1, 7, 'エピソード7', 'エピソード7の詳細', '00:30:00'), (1, 8, 'エピソード8', 'エピソード8の詳細', '00:30:00'), (1, 9, 'エピソード9', 'エピソード9の詳細', '00:30:00'), (2, 1, 'エピソード1', 'エピソード1の詳細', '00:30:00'), (2, 2, 'エピソード2', 'エピソード2の詳細', '00:30:00'), (2, 3, 'エピソード3', 'エピソード3の詳細', '00:30:00');
 
        INSERT INTO time_slots (time_slot_name, start_time, end_time) VALUES ('朝', '06:00:00', '11:59:59'), ('昼', '12:00:00', '17:59:59'), ('夜', '18:00:00', '23:59:59'), ('深夜', '00:00:00', '05:59:59');
 
