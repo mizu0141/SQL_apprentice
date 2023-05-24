@@ -18,7 +18,7 @@
        channel_id INT PRIMARY KEY AUTO_INCREMENT,
        channel_name VARCHAR(255) NOT NULL
 );
-    ```
+    
 
 ## - 番組テーブルの作成
 - 番組テーブルを以下のコマンドを実行して、作成してください。
