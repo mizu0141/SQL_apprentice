@@ -22,8 +22,8 @@ ORDER BY views_count DESC LIMIT 3;
 
 ### 3.本日放送される全ての番組に対して、チャンネル名、放送開始時刻、放送終了時刻、シーズン数、エピソード数、エピソードタイトル、エピソード詳細を表示する
 ```sql
-SELECT  c.channel_name, CONTACT(ce.broadcast_date, ' ', ce.start_time) AS start_time,  
-        CONTACT ce.broadcast_date, ' ', ce.end_time) AS end_time, season_number, episode_number, episode_name,            
+SELECT  c.channel_name, CONTACT(ce.broadcast_date, ' ', ce.start_time) AS start_time,
+        CONTACT ce.broadcast_date, ' ', ce.end_time) AS end_time, season_number, episode_number, episode_name,
         episode_detail
 FROM channels AS c
 JOIN channel_episodes AS ce
@@ -32,13 +32,13 @@ JOIN episodes AS e
 ON ce.episode_id = e.episode_id
 JOIN seasons AS s
 ON e.season_id = s.season_id
-WHERE DATE(broadcast_time) = DATE(NOW())
+WHERE DATE(broadcast_date) = DATE(NOW())
 ORDER BY channel_name;
 ```
 - ORDER BY で、SELECT で指定した項目の中から並び替えたい項目を指定する
 ### 4.ドラマのチャンネルに対して、放送開始時刻、放送終了時刻、シーズン数、エピソード数、エピソードタイトル、エピソード詳細を本日から一週間分表示する
 ```sql
-SELECT CONTACT(ce.broadcast_date, ' ', ce.start_time) AS start_time, CONTACT ce.broadcast_date, ' ', ce.end_time) AS 
+SELECT CONTACT(ce.broadcast_date, ' ', ce.start_time) AS start_time, CONTACT ce.broadcast_date, ' ', ce.end_time) AS
        end_time, s.season_number, e.episode_number, e.episode_name, e.episode_detail
 FROM channels AS c
 JOIN channel_episodes AS ce
@@ -47,7 +47,7 @@ JOIN episodes AS e
 ON ce.episode_id = e.episode_id
 JOIN seasons AS s
 ON e.season_id = s.season_id
-WHERE DATE(broadcast_time) BETWEEN DATE(NOW()) AND DATE_ADD(DATE(NOW()), INTERVAL 7 DAY)
+WHERE DATE(broadcast_date) BETWEEN DATE(NOW()) AND DATE_ADD(DATE(NOW()), INTERVAL 7 DAY)
 AND c.channel_name = 'ドラマ';
 ```
 
@@ -61,7 +61,7 @@ JOIN programs AS p
 ON s.program_id = p.program_id
 JOIN channel_episodes AS ce
 ON e.episode_id = ce.episode_id
-WHERE ce.broadcast_time BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE()
+WHERE ce.broadcast_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE()
 GROUP BY p.program_id
 ORDER BY total_views DESC LIMIT 2;
 ```

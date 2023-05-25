@@ -1,66 +1,78 @@
 
 
 #### テーブル: channels
-| 列名         | データ型      | 制約                  |
-|--------------|--------------|-----------------------|
-| channel_id   | INT          | PRIMARY KEY, AUTO_INCREMENT |
-| channel_name | VARCHAR(255) | NOT NULL              |
+| 列名          | データ型     |Null   | Key | 初期値    | AUTO_INCREMENT |
+|--------------|--------------|-------|-----|-----------|----------------|
+|id   | INT          | -     |PRI  | -         |YES             |
+| channel_name | VARCHAR(50)  | -     | -   | -         |NO              |
 
 #### テーブル: programs
-| 列名           | データ型      | 制約                  |
-|----------------|--------------|-----------------------|
-| program_id     | INT          | PRIMARY KEY, AUTO_INCREMENT |
-| program_name   | VARCHAR(255) | NOT NULL              |
-| program_detail | TEXT         |                       |
+| 列名          | データ型     |Null   | Key | 初期値    | AUTO_INCREMENT |
+|--------------|--------------|-------|-----|-----------|----------------|
+| program_id     | INT          | -     |PRI  | -         |YES            |
+| program_name   | VARCHAR(100) | -     | -   | -         |NO             |
+| program_detail | TEXT         | -     | -   | -         |NO             |
+| is_series      | BOOLEAN      | -     | -   | true      |NO             |
 
 #### テーブル: seasons
-| 列名            | データ型 | 制約                           |
-|-----------------|---------|--------------------------------|
-| season_id       | INT     | PRIMARY KEY, AUTO_INCREMENT    |
-| program_id      | INT     | NOT NULL, FOREIGN KEY         |
-| season_number   | INT     | NOT NULL                       |
+| 列名          | データ型     |Null   | Key | 初期値    | AUTO_INCREMENT |
+|--------------|--------------|-------|-----|-----------|----------------|
+|id       | INT          | -     |PRI  | -         |YES             |
+| program_id      | INT          | -     | -   | -         |NO              |
+| season_number   | INT          | -     | -   | -         |NO              |
 
 #### テーブル: genres
-| 列名          | データ型      | 制約                  |
-|---------------|--------------|-----------------------|
-| genre_id      | INT          | PRIMARY KEY, AUTO_INCREMENT |
-| genre_name    | VARCHAR(255) | NOT NULL              |
+| 列名          | データ型     |Null   | Key | 初期値    | AUTO_INCREMENT |
+|--------------|--------------|-------|-----|-----------|----------------|
+|id     | INT          | -     |PRI  | -         |YES             |
+| genre_name   | VARCHAR(50) | -     | -   | -         |NO              |
+
 
 #### テーブル: program_genres
-| 列名         | データ型 | 制約                            |
-|--------------|---------|---------------------------------|
-| program_id   | INT     | NOT NULL, FOREIGN KEY           |
-| genre_id     | INT     | NOT NULL, FOREIGN KEY           |
-|              |         | PRIMARY KEY (program_id, genre_id) |
+| 列名          | データ型     |Null   | Key | 初期値    | AUTO_INCREMENT | 参照|
+|--------------|--------------|-------|-----|-----------|----------------|-----|
+| program_id     | INT          | -     |PRI, FK | -         |NO         | programs(program_id)|
+| genre_id       | INT          | -     |PRI, FK | -         |NO         |  genres(id)|
+
 
 #### テーブル: time_slots
-| 列名            | データ型      | 制約                  |
-|-----------------|--------------|-----------------------|
-| time_slot_id    | INT          | PRIMARY KEY, AUTO_INCREMENT |
-| time_slot_name  | VARCHAR(255) | NOT NULL              |
-| start_time      | TIME         | NOT NULL              |
-| end_time        | TIME         | NOT NULL              |
+| 列名          | データ型     |Null   | Key | 初期値    | AUTO_INCREMENT |
+|--------------|--------------|-------|-----|-----------|----------------|
+| id   | INT          | -     |PRI  | -         |YES             |
+| time_slot_name | VARCHAR(50) | -     | -   | -         |NO              |
+
+
 
 #### テーブル: episodes
-| 列名            | データ型 | 制約                           |
-|-----------------|---------|--------------------------------|
-| episode_id      | INT     | PRIMARY KEY, AUTO_INCREMENT    |
-| season_id       | INT     | NOT NULL, FOREIGN KEY         |
-| episode_number  | INT     | NOT NULL                       |
-| episode_name    | VARCHAR(255) | NOT NULL                    |
-| episode_detail  | TEXT    |                               |
-| duration        | TIME    |                               |
+| 列名          | データ型     |Null   | Key | 初期値    | AUTO_INCREMENT |
+|--------------|--------------|-------|-----|-----------|----------------|
+|id   | INT          | -     |PRI  | -         |YES             |
+| season_id      | INT          | -     | -   | -         |NO              |
+| episode_number | INT          | -     | -   | -         |NO              |
+| episode_title  | VARCHAR(100) | -     | -   | -         |NO              |
+| episode_detail | TEXT         | -     | -   | -         |NO              |
+| episode_length | TIME         | -     | -   | -         |NO              |
+| published_date | DATETIME     | -     | -   | -         |NO              |
+
+
 
 
 #### テーブル: channel_episodes
-| 列名             | データ型 | 制約                              |
-|------------------|---------|-----------------------------------|
-| channel_id       | INT     | NOT NULL, FOREIGN KEY             |
-| episode_id       | INT     | NOT NULL, FOREIGN KEY             |
-| broadcast_date   | DATE    | NOT NULL                          |
-| time_slot_id     | INT     | NOT NULL, FOREIGN KEY             |
-| start_time       | TIME    |                                   |
-| end_time         | TIME    |                                   |
-| views_count      | INT     | DEFAULT 0                         |
-|                  |         | PRIMARY KEY (channel_id, episode_id, broadcast_date) |
-|                  |         | UNIQUE (channel_id, broadcast_date, time_slot_id)   |
+| 列名          | データ型     |Null   | Key | 初期値    | AUTO_INCREMENT | 参照|
+|--------------|--------------|-------|-----|-----------|----------------|-----|
+| channel_id     | INT          | -     |PRI  | -         |YES             | channels(id)|
+| episode_id     | INT          | -     |PRI  | -         |YES             | episodes(id)|
+| time_slot_id   | INT          | -     |FK | -         |NO              | time_slots(id)|
+| season_id      | INT          | -     |   | -         |NO              | seasons(id)|
+| start_time     | TIME         | -     | -   | -         |NO              |-|
+| end_time       | TIME         | -     | -   | -         |NO              |-|
+
+#### 追加
+#### テーブル:view_count
+| 列名          | データ型     |Null   | Key | 初期値    | AUTO_INCREMENT | 参照|
+|--------------|--------------|-------|-----|-----------|----------------|-----|
+| id   | INT          | -     |PRI  | -         |YES             |-|
+| channel_id     | INT          | -     |FK   | -         |NO             | channels(id)|
+| episode_id     | INT          | -     |FK   | -         |NO             | episodes(id)|
+| view_count   | INT          | -     | -   | -         |NO             |-|
+
