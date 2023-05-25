@@ -46,7 +46,7 @@
        season_number INT NOT NULL,
     FOREIGN KEY (program_id) REFERENCES programs(program_id)
     );
-  ```
+ ```
 
 ## ジャンルテーブルの作成
 - ジャンルテーブルを以下のコマンドを実行して、作成してください。
