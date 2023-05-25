@@ -27,26 +27,26 @@
 ## 番組テーブルの作成
 - 番組テーブルを以下のコマンドを実行して、作成してください。
 
-　　　```sql
+```sql
     CREATE TABLE programs (
        program_id INT PRIMARY KEY AUTO_INCREMENT,
        program_name VARCHAR(100) NOT NULL,
        program_detail TEXT NOT NULL
        is_series BOOLEAN NOT NULL  DEFAULT TRUE
 　　　);
-  ```
+```
 
 ## シーズンテーブルの作成
 - シーズンテーブルを以下のコマンドを実行して、作成してください。
 
- ```sql
+```sql
     CREATE TABLE seasons (
        season_id INT PRIMARY KEY AUTO_INCREMENT,
        program_id INT NOT NULL,
        season_number INT NOT NULL,
     FOREIGN KEY (program_id) REFERENCES programs(program_id)
     );
- ```
+```
 
 ## ジャンルテーブルの作成
 - ジャンルテーブルを以下のコマンドを実行して、作成してください。
